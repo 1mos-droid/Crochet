@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Cart | Cozy Crochet</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+body { font-family: 'Inter', sans-serif; background:#FFF8F2; color:#333; }
+.main-content { max-width:1000px; margin:0 auto; padding:2rem; }
+.topbar { display:flex; align-items:center; justify-content:space-between; padding:1rem; background:#fff; box-shadow:0 1px 5px rgba(0,0,0,0.05); border-radius:12px; }
+.btn-menu { font-size:1.5rem; background:none; border:none; cursor:pointer; color:#333; }
+.cart-page { display:flex; flex-wrap:wrap; gap:2rem; margin-top:2rem; }
+#cartItems { flex:2; }
+.cart-summary { flex:1; background:#fff; padding:1.5rem; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.1); height:min-content; }
+.cart-item { display:flex; align-items:center; background:#fff; padding:1rem; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.05); margin-bottom:1rem; }
+.cart-item img { width:100px; height:100px; object-fit:cover; border-radius:12px; margin-right:1rem; }
+.item-details { flex:1; }
+.item-details h4 { margin:0 0 0.3rem 0; color:#D17C4B; }
+.item-details p { margin:0.2rem 0; }
+.quantity { display:flex; align-items:center; margin-top:0.5rem; }
+.quantity button { padding:0.3rem 0.7rem; background:#D17C4B; color:#fff; border:none; border-radius:8px; cursor:pointer; margin:0 0.3rem; transition:.3s; }
+.quantity button:hover { background:#b96b3f; }
+.remove { background:#FF6B6B; color:#fff; border:none; padding:0.3rem 0.7rem; border-radius:8px; cursor:pointer; margin-left:0.5rem; transition:.3s; }
+.remove:hover { background:#e05555; }
+.btn { display:block; width:100%; padding:0.7rem; background:#D17C4B; color:#fff; border:none; border-radius:12px; cursor:pointer; font-size:1rem; margin-top:1rem; transition:.3s; }
+.btn:hover { background:#b96b3f; }
+</style>
+</head>
+<body>
+
+<aside class="sidebar" id="sidebar">
+  <div class="logo-sidebar">Cozy Crochet</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="blog.html">Tutorials</a>
+    <a href="custom-order.html">Custom Order</a>
+    <a href="account.html">Account</a>
+  </nav>
+</aside>
+
+<div class="main-content">
+  <header class="topbar">
+    <button class="btn-menu" onclick="toggleSidebar()">☰</button>
+    <h1>Your Cart</h1>
+  </header>
+
+  <section class="cart-page">
+    <div id="cartItems"></div>
+    <div class="cart-summary">
+      <h3>Order Summary</h3>
+      <p>Subtotal: <span id="subtotal">$0.00</span></p>
+      <p>Shipping: <span>$5.00</span></p>
+      <h2>Total: <span id="total">$0.00</span></h2>
+      <button class="btn" id="checkoutBtn">Proceed to Checkout</button>
+    </div>
+  </section>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+const cartContainer = document.getElementById('cartItems');
+const subtotalEl = document.getElementById('subtotal');
+const totalEl = document.getElementById('total');
+
+function renderCart() {
+  if(cart.length === 0){
+    cartContainer.innerHTML = '<p>Your cart is empty 😢</p>';
+    subtotalEl.textContent = '$0.00';
+    totalEl.textContent = '$0.00';
+    return;
+  }
+
+  cartContainer.innerHTML = cart.map((item,index)=>`
+    <div class="cart-item">
+      <img src="${item.img}" alt="${item.name}">
+      <div class="item-details">
+        <h4>${item.name}</h4>
+        <p>Size: ${item.size || 'N/A'}</p>
+        <p>Yarn: ${item.yarn || 'N/A'}</p>
+        <p class="price">$${item.price}</p>
+        <div class="quantity">
+          <button onclick="changeQuantity(${index},-1)">−</button>
+          <span>${item.quantity}</span>
+          <button onclick="changeQuantity(${index},1)">+</button>
+        </div>
+      </div>
+      <button class="remove" onclick="removeItem(${index})">✕</button>
+    </div>
+  `).join('');
+
+  updateTotals();
+}
+
+function changeQuantity(index,delta){
+  cart[index].quantity = Math.max(1, cart[index].quantity + delta);
+  saveCart();
+  renderCart();
+}
+
+function removeItem(index){
+  cart.splice(index,1);
+  saveCart();
+  renderCart();
+}
+
+function saveCart(){
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function updateTotals(){
+  const subtotal = cart.reduce((sum,item)=>sum + item.price*item.quantity,0);
+  subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+  totalEl.textContent = `$${(subtotal+5).toFixed(2)}`;
+}
+
+renderCart();
+
+// Checkout button
+document.getElementById('checkoutBtn').addEventListener('click', ()=>{
+  if(cart.length===0){
+    alert('Your cart is empty 😢');
+  } else {
+    alert('✅ Checkout functionality coming soon!');
+  }
+});
+</script>
+</body>
+</html>

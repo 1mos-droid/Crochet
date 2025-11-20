@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Account | Cozy Crochet</title>  
+  <link rel="stylesheet" href="css/style.css">  
+  <style>  
+    body {  
+      background: linear-gradient(135deg, #FFEFE5, #FFF8F2);  
+      display: flex;  
+      flex-direction: column;  
+      min-height: 100vh;  
+    }  .account-container {  
+  flex: 1;  
+  display: flex;  
+  justify-content: center;  
+  align-items: center;  
+  padding: 2rem;  
+  animation: fadeInUp 0.8s ease forwards;  
+}  
+
+.account-box {  
+  background: #fff;  
+  padding: 2.5rem;  
+  border-radius: 15px;  
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);  
+  max-width: 400px;  
+  width: 100%;  
+  text-align: center;  
+  transition: all 0.3s ease;  
+}  
+
+.account-box h2 {  
+  color: #D17C4B;  
+  margin-bottom: 1.5rem;  
+}  
+
+.account-box input {  
+  width: 100%;  
+  padding: 0.8rem;  
+  margin: 0.6rem 0;  
+  border: 1px solid #ddd;  
+  border-radius: 8px;  
+  font-size: 1rem;  
+  transition: border-color 0.3s;  
+}  
+
+.account-box input:focus {  
+  border-color: #D17C4B;  
+  outline: none;  
+}  
+
+.account-box button {  
+  width: 100%;  
+  padding: 0.9rem;  
+  background: #D17C4B;  
+  color: #fff;  
+  border: none;  
+  border-radius: 8px;  
+  cursor: pointer;  
+  font-size: 1rem;  
+  transition: transform 0.3s, box-shadow 0.3s;  
+  margin-top: 0.8rem;  
+}  
+
+.account-box button:hover {  
+  transform: translateY(-2px);  
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);  
+}  
+
+.switch {  
+  margin-top: 1rem;  
+  font-size: 0.95rem;  
+  color: #555;  
+}  
+
+.switch a {  
+  color: #D17C4B;  
+  text-decoration: none;  
+  font-weight: 600;  
+  margin-left: 0.3rem;  
+}  
+
+.switch a:hover {  
+  text-decoration: underline;  
+}  
+
+@media (max-width: 600px) {  
+  .account-box {  
+    padding: 2rem 1.5rem;  
+  }  
+}
+
+  </style>  
+</head>  
+<body>  <!-- Sidebar -->  <aside class="sidebar" id="sidebar">  
+  <div class="logo-sidebar" onclick="toggleSidebar()">Cozy Crochet</div>  
+  <nav>  
+    <a href="index.html">Home</a>  
+    <a href="shop.html">Shop</a>  
+    <a href="about.html">About</a>  
+    <a href="blog.html">Tutorials</a>  
+    <a href="custom-order.html">Custom Order</a>  
+    <a href="account.html" class="active">Account</a>  
+  </nav>  
+</aside>  <!-- Overlay -->  <div id="overlay"></div>  <!-- Topbar -->  <header class="topbar">  
+  <button class="btn-menu" onclick="toggleSidebar()">☰</button>  
+  <h1 style="margin-left:1rem; color:#D17C4B;">My Account</h1>  
+</header>  <!-- Account Content -->  <main class="account-container">  
+  <div class="account-box" id="loginBox">  
+    <h2>Welcome Back 🧶</h2>  
+    <input type="email" id="loginEmail" placeholder="Email" required>  
+    <input type="password" id="loginPassword" placeholder="Password" required>  
+    <button id="loginBtn">Login</button>  
+    <p class="switch">Don't have an account?  
+      <a href="#" id="showSignup">Sign up</a>  
+    </p>  
+  </div>    <div class="account-box" id="signupBox" style="display:none;">  
+    <h2>Create Account ✨</h2>  
+    <input type="text" id="signupName" placeholder="Full Name" required>  
+    <input type="email" id="signupEmail" placeholder="Email" required>  
+    <input type="password" id="signupPassword" placeholder="Password" required>  
+    <button id="signupBtn">Sign Up</button>  
+    <p class="switch">Already have an account?  
+      <a href="#" id="showLogin">Login</a>  
+    </p>  
+  </div>  
+</main>  <script src="js/main.js"></script> 
+<script>
+  // --- This is the new, rewritten logic ---
+
+  const loginBox = document.getElementById('loginBox');
+  const signupBox = document.getElementById('signupBox');
+  const showSignup = document.getElementById('showSignup');
+  const showLogin = document.getElementById('showLogin');
+  
+  const signupBtn = document.getElementById('signupBtn');
+  const loginBtn = document.getElementById('loginBtn');
+
+  // Toggle Login/Signup (same as before)
+  showSignup.onclick = (e) => {
+    e.preventDefault();
+    loginBox.style.display = 'none';
+    signupBox.style.display = 'block';
+  };
+  showLogin.onclick = (e) => {
+    e.preventDefault();
+    signupBox.style.display = 'none';
+    loginBox.style.display = 'block';
+  };
+
+  // --- NEW SIGNUP LOGIC ---
+  signupBtn.addEventListener('click', async () => {
+    const name = document.getElementById('signupName').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value.trim();
+
+    if (!name || !email || !password) return alert('Please fill in all fields.');
+
+    try {
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) { // Status 200-299
+        alert('🎉 Account created! You can now log in.');
+        // Show the login form
+        signupBox.style.display = 'none';
+        loginBox.style.display = 'block';
+      } else {
+        // Show the error from the server
+        alert(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
+      alert('An error occurred. Please try again.');
+    }
+  });
+
+  // --- NEW LOGIN LOGIC ---
+  loginBtn.addEventListener('click', async () => {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    
+    if (!email || !password) return alert('Please enter email and password.');
+
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        // --- LOGIN SUCCESSFUL ---
+        // We got a token from the server.
+        // THIS is the correct way to "log in" a user.
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+
+        alert(`👋 Welcome back, ${data.user.name}!`);
+        window.location.href = 'index.html'; // Redirect to homepage
+      } else {
+        // Show the error from the server
+        alert(`Login failed: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('An error occurred. Please try again.');
+    }
+  });
+</script>

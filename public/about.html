@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | Cozy Crochet</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Additional About Page Styling */
+    .about {
+      padding: 4rem 2rem;
+      background: #FFF8F2;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .about h1 {
+      text-align: center;
+      color: #D17C4B;
+      margin-bottom: 1rem;
+      font-size: 2.2rem;
+    }
+
+    .about-intro {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .about-section {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .about-section img {
+      flex: 1;
+      max-width: 450px;
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .about-text {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .about-text h2 {
+      color: #D17C4B;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .about-text p {
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .values {
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .values h2 {
+      color: #D17C4B;
+      margin-bottom: 1rem;
+    }
+
+    .value-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .value-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .value-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .value-card h3 {
+      color: #D17C4B;
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .value-card p {
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width:768px) {
+      .about-section {
+        flex-direction: column;
+        text-align: center;
+      }
+      .about-section img {
+        max-width: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="logo-sidebar" onclick="toggleSidebar()">Cozy Crochet</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="blog.html">Tutorials</a>
+    <a href="custom-order.html">Custom Order</a>
+    <a href="account.html">Account</a>
+  </nav>
+</aside>
+
+<!-- Overlay -->
+<div id="overlay"></div>
+
+<!-- Topbar -->
+<header class="topbar">
+  <button class="btn-menu" onclick="toggleSidebar()">☰</button>
+  <h1 style="margin-left:1rem; color:#D17C4B;">About Us</h1>
+</header>
+
+<!-- Main Content -->
+<main class="about">
+  <h1>Our Story</h1>
+  <p class="about-intro">
+    At <strong>Cozy Crochet</strong>, every stitch tells a story. What started as a small passion for crafting
+    unique, handmade crochet pieces has blossomed into a warm community of artisans and dreamers.
+  </p>
+
+  <section class="about-section">
+    <div class="about-text">
+      <h2>From Yarn to Art</h2>
+      <p>
+        Each product is carefully handmade with love and attention to detail. We believe in the beauty of slow fashion,
+        where quality, comfort, and creativity intertwine. Our mission is to bring warmth and personality to every home,
+        one loop at a time.
+      </p>
+      <p>
+        Whether you’re looking for a cozy blanket, a cute plushie, or a personalized order — we’ve got something special waiting for you.
+      </p>
+    </div>
+    <img src="media/images/about-yarn.jpg" alt="Cozy Crochet Yarn">
+  </section>
+
+  <section class="values">
+    <h2>Our Values</h2>
+    <div class="value-cards">
+      <div class="value-card">
+        <h3>🧶 Handcrafted Quality</h3>
+        <p>Every product is handmade, ensuring attention to detail, love, and lasting quality.</p>
+      </div>
+      <div class="value-card">
+        <h3>🌿 Sustainability</h3>
+        <p>We use eco-friendly yarns and packaging to help protect the planet we call home.</p>
+      </div>
+      <div class="value-card">
+        <h3>💛 Community</h3>
+        <p>We believe in connection — supporting fellow creators, customers, and crochet enthusiasts.</p>
+      </div>
+      <div class="value-card">
+        <h3>🎁 Customization</h3>
+        <p>Every item can be personalized — because your story deserves something unique.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>

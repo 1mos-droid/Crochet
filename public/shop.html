@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop | Cozy Crochet</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* --- Base & Reset --- */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
+body { background:#FFF8F2; color:#333; line-height:1.6; overflow-x:hidden; }
+
+/* --- Sidebar --- */
+.sidebar { position: fixed; left:-250px; top:0; width:250px; height:100vh; background:#fff; box-shadow:2px 0 12px rgba(0,0,0,0.1); transition:left .3s ease; padding:2rem 1.5rem; z-index:1000; }
+.sidebar.open { left:0; }
+.logo-sidebar { font-size:1.8rem; font-weight:700; color:#D17C4B; cursor:pointer; margin-bottom:2rem; }
+.sidebar nav a { display:block; margin:1rem 0; text-decoration:none; color:#333; font-weight:500; transition:.3s; }
+.sidebar nav a:hover { color:#D17C4B; }
+#overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.3); display:none; z-index:900; }
+#overlay.show { display:block; }
+
+/* --- Topbar --- */
+.topbar { height:60px; background:#fff; display:flex; align-items:center; padding:0 1.5rem; box-shadow:0 1px 5px rgba(0,0,0,0.05); z-index:800; }
+.btn-menu { font-size:1.6rem; background:none; border:none; cursor:pointer; color:#333; }
+
+/* --- Shop Header --- */
+.shop-header { padding:2rem 2rem 1rem 2rem; text-align:center; }
+.shop-header h1 { font-size:2rem; color:#D17C4B; margin-bottom:1rem; }
+.filters-top { display:flex; flex-wrap:wrap; justify-content:center; gap:1rem; margin-bottom:1.5rem; }
+.filters-top select { padding:.6rem 1rem; border-radius:8px; border:1px solid #D17C4B; background:#fff; color:#333; cursor:pointer; transition:.3s; }
+.filters-top select:hover { background:#FFEFE5; }
+
+/* --- Products Grid --- */
+.products-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1.5rem; padding:2rem; }
+.product-card { background:#fff; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.08); overflow:hidden; text-align:center; transition: transform .3s, box-shadow .3s; cursor:pointer; }
+.product-card:hover { transform: translateY(-5px); box-shadow:0 5px 20px rgba(0,0,0,0.12); }
+.product-card img { width:100%; height:200px; object-fit:cover; border-bottom:1px solid #eee; }
+.product-card h4 { margin:0.8rem 0 0.3rem 0; color:#D17C4B; font-size:1.1rem; }
+.product-card p { margin-bottom:0.8rem; font-weight:500; }
+.product-card .btn { margin-bottom:1rem; background:#D17C4B; color:#fff; border:none; padding:.6rem 1.2rem; border-radius:8px; text-decoration:none; display:inline-block; transition:.3s; }
+.product-card .btn:hover { background:#b96b3f; }
+
+/* --- Responsive --- */
+@media(max-width:768px){
+  .filters-top { flex-direction:column; align-items:center; }
+  .product-card img { height:180px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="logo-sidebar">Cozy Crochet</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="blog.html">Tutorials</a>
+    <a href="custom-order.html">Custom Order</a>
+    <a href="account.html">Account</a>
+  </nav>
+</aside>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="main-content" id="mainContent">
+  <header class="topbar">
+    <button class="btn-menu" onclick="toggleSidebar()">☰</button>
+  </header>
+
+  <!-- Shop Header -->
+  <section class="shop-header">
+    <h1>Shop Our Cozy Collection</h1>
+    <div class="filters-top">
+      <select id="categoryFilter">
+        <option value="All">All Categories</option>
+        <option value="Clothing">Clothing</option>
+        <option value="Bags">Bags</option>
+        <option value="Plushies">Plushies</option>
+        <option value="Home Decor">Home Decor</option>
+        <option value="Baby Items">Baby Items</option>
+      </select>
+      <select id="yarnFilter">
+        <option value="All">All Yarns</option>
+        <option value="Cotton">Cotton</option>
+        <option value="Wool">Wool</option>
+        <option value="Acrylic">Acrylic</option>
+      </select>
+      <select id="sizeFilter">
+        <option value="All">All Sizes</option>
+        <option value="S">Small</option>
+        <option value="M">Medium</option>
+        <option value="L">Large</option>
+      </select>
+      <select id="sortFilter">
+        <option value="default">Default</option>
+        <option value="priceAsc">Price: Low → High</option>
+        <option value="priceDesc">Price: High → Low</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- Products Grid -->
+  <section class="products-grid">
+    <!-- JS Injects Products -->
+  </section>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/shop.js"></script>
+</body>
+</html>

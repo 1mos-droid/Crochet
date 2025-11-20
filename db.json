@@ -1,0 +1,51 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Cozy Sweater",
+      "category": "Clothing",
+      "price": 50,
+      "yarn": "Wool",
+      "size": "M",
+      "img": "/images/1000082759-removebg-preview.png"
+    },
+    {
+      "id": 2,
+      "name": "Handmade Bag",
+      "category": "Bags",
+      "price": 80,
+      "yarn": "Cotton",
+      "size": "L",
+      "img": "/images/1000082753-removebg-preview.png"
+    },
+    {
+      "id": 3,
+      "name": "Plushie Toy",
+      "category": "Plushies",
+      "price": 25,
+      "yarn": "Acrylic",
+      "size": "S",
+      "img": "/images/1000082727-removebg-preview.png"
+    },
+    {
+      "id": 4,
+      "name": "Decor Pillow",
+      "category": "Home Decor",
+      "price": 40,
+      "yarn": "Cotton",
+      "size": "M",
+      "img": "/images/1000082745-removebg-preview.png"
+    },
+    {
+      "id": 5,
+      "name": "Baby Booties",
+      "category": "Baby Items",
+      "price": 30,
+      "yarn": "Wool",
+      "size": "S",
+      "img": "/images/1000082761-removebg-preview.png"
+    }
+  ],
+  "users": [],
+  "customOrders": []
+}

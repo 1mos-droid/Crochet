@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cozy Crochet | Handmade & Sustainable</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* --- Base & Reset --- */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
+body { background:#FFF8F2; color:#333; line-height:1.6; overflow-x:hidden; }
+
+/* --- Sidebar --- */
+.sidebar { position: fixed; left:-250px; top:0; width:250px; height:100vh; background:#fff; box-shadow:2px 0 12px rgba(0,0,0,0.1); transition:left .3s ease; padding:2rem 1.5rem; z-index:1000; }
+.sidebar.open { left:0; }
+.logo-sidebar { font-size:1.8rem; font-weight:700; color:#D17C4B; cursor:pointer; margin-bottom:2rem; }
+.sidebar nav a { display:block; margin:1rem 0; text-decoration:none; color:#333; font-weight:500; transition:.3s; }
+.sidebar nav a:hover { color:#D17C4B; }
+#overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.3); display:none; z-index:900; }
+#overlay.show { display:block; }
+
+/* --- Topbar --- */
+.topbar { height:60px; background:#fff; display:flex; align-items:center; padding:0 1.5rem; box-shadow:0 1px 5px rgba(0,0,0,0.05); z-index:800; }
+.btn-menu { font-size:1.6rem; background:none; border:none; cursor:pointer; color:#333; }
+
+/* --- Hero --- */
+.hero { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; padding:4rem 3rem; gap:2rem; background: linear-gradient(135deg, #FFEFE5, #FFF8F2); background-size: 400% 400%; animation: gradientMove 15s ease infinite; border-radius:12px; margin:2rem; }
+@keyframes gradientMove { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+.hero-text { flex:1; min-width:280px; animation: fadeInUp 1s ease forwards; }
+.hero-text h1 { font-size:2.8rem; color:#D17C4B; margin-bottom:1rem; }
+.hero-text p { font-size:1.2rem; margin-bottom:1.5rem; }
+.hero-text .btn, .hero-text .btn-outline { margin-right:1rem; transition: transform .3s, box-shadow .3s; }
+.hero-text .btn:hover { transform: translateY(-3px); box-shadow:0 5px 10px rgba(0,0,0,0.1); }
+.hero-text .btn-outline:hover { transform: translateY(-3px); box-shadow:0 5px 10px rgba(0,0,0,0.1); }
+.hero-image { flex:1; text-align:center; min-width:280px; }
+.hero-image img { max-width:100%; border-radius:12px; animation: float 6s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-8px) scale(1.02);} }
+@keyframes fadeInUp { 0% { opacity:0; transform: translateY(20px); } 100% { opacity:1; transform: translateY(0); } }
+
+/* --- Carousel Section --- */
+.carousel-section { padding: 3rem; background:#FFF8F2; border-radius:12px; margin:2rem; box-shadow:0 5px 15px rgba(0,0,0,0.05); }
+.carousel-section h2 { text-align:center; color:#D17C4B; margin-bottom:1.5rem; font-size:2rem; }
+.carousel { display:flex; overflow-x:auto; gap:1.5rem; scroll-behavior:smooth; padding-bottom:1rem; }
+.carousel::-webkit-scrollbar { height:8px; }
+.carousel::-webkit-scrollbar-thumb { background:#D17C4B; border-radius:4px; }
+.carousel-item { min-width:200px; flex:0 0 auto; background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1); padding:1rem; text-align:center; transition: transform .3s; }
+.carousel-item:hover { transform: translateY(-5px); }
+.carousel-item img { width:100%; border-radius:10px; margin-bottom:0.5rem; }
+.carousel-item p { font-weight:500; }
+
+/* --- Brand Story --- */
+.story { padding:3rem 2rem; text-align:center; animation: fadeInUp 1s ease forwards; margin:2rem; }
+.story h2 { font-size:2rem; color:#D17C4B; margin-bottom:1rem; }
+.story p { max-width:700px; margin:0 auto 1.5rem; line-height:1.6; font-size:1.1rem; }
+.cta-buttons a { margin:0 .5rem; transition: transform .3s; }
+.cta-buttons a:hover { transform: translateY(-3px); }
+
+/* --- Testimonials / Social Proof --- */
+.testimonials { background:#FFEFE5; padding:3rem 2rem; margin:2rem; border-radius:12px; }
+.testimonials h2 { text-align:center; color:#D17C4B; margin-bottom:2rem; font-size:2rem; }
+.testimonials-container { display:flex; flex-wrap:wrap; justify-content:center; gap:1.5rem; }
+.testimonial { background:#fff; border-radius:12px; padding:1.5rem; width:250px; box-shadow:0 2px 8px rgba(0,0,0,0.1); text-align:center; }
+.testimonial img { width:60px; height:60px; border-radius:50%; object-fit:cover; margin-bottom:0.5rem; }
+.testimonial p { font-style:italic; margin-bottom:0.5rem; }
+.testimonial h4 { font-weight:600; color:#D17C4B; }
+
+/* --- Gallery / Lookbook --- */
+.lookbook { padding:3rem 2rem; margin:2rem; }
+.lookbook h2 { text-align:center; color:#D17C4B; margin-bottom:2rem; font-size:2rem; }
+.lookbook-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; }
+.lookbook-grid img { width:100%; border-radius:12px; transition: transform .3s; }
+.lookbook-grid img:hover { transform: scale(1.05); }
+
+/* --- Buttons --- */
+.btn { padding:.8rem 1.5rem; background:#D17C4B; color:#fff; border:none; border-radius:8px; cursor:pointer; text-decoration:none; display:inline-block; transition:.3s; }
+.btn:hover { background:#b96b3f; }
+.btn-outline { padding:.8rem 1.5rem; border:2px solid #D17C4B; color:#D17C4B; background:transparent; text-decoration:none; display:inline-block; transition:.3s; }
+.btn-outline:hover { background:#D17C4B; color:#fff; }
+
+/* --- Responsive --- */
+@media(max-width:768px){
+  .hero { flex-direction:column; text-align:center; padding:2rem; }
+  .hero-text h1 { font-size:2rem; }
+  .carousel { overflow-x:scroll; }
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="logo-sidebar">Cozy Crochet</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="blog.html">Tutorials</a>
+    <a href="custom-order.html">Custom Order</a>
+    <a href="account.html">Account</a>
+  </nav>
+</aside>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="main-content" id="mainContent">
+  <header class="topbar">
+    <button class="btn-menu" onclick="toggleSidebar()">☰</button>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Handmade Crochet, Crafted With Love</h1>
+      <p>Discover cozy, sustainable pieces for every lifestyle.</p>
+      <a href="shop.html" class="btn">Shop Now</a>
+      <a href="custom-order.html" class="btn-outline">Custom Orders</a>
+    </div>
+    <div class="hero-image">
+      <img src="media/images/1000082405-removebg-preview.png" alt="Crochet products">
+    </div>
+  </section>
+
+  <!-- Featured Products Carousel -->
+  <section class="carousel-section">
+    <h2>Featured Products</h2>
+    <div class="carousel" id="product-carousel">
+      <div class="carousel-item">
+        <img src="media/images/1000082759-removebg-preview.png" alt="Cozy Sweater">
+        <p>Cozy Sweater</p>
+      </div>
+      <div class="carousel-item">
+        <img src="media/images/1000082753-removebg-preview.png" alt="Handmade Bag">
+        <p>Handmade Bag</p>
+      </div>
+      <div class="carousel-item">
+        <img src="media/images/1000082745-removebg-preview.png" alt="Decor Pillow">
+        <p>Decor Pillow</p>
+      </div>
+      <div class="carousel-item">
+        <img src="media/images/1000082727-removebg-preview.png" alt="Plushie Toy">
+        <p>Plushie Toy</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand Story -->
+  <section class="story">
+    <h2>Why Crochet?</h2>
+    <p>Every piece is hand-crafted with care, connecting tradition with modern design. Sustainability and creativity are at our core.</p>
+    <div class="cta-buttons">
+      <a href="shop.html" class="btn">Shop</a>
+      <a href="blog.html" class="btn-outline">Tutorials</a>
+    </div>
+  </section>
+
+  <!-- Lookbook / Gallery -->
+  <section class="lookbook">
+    <h2>Lookbook</h2>
+    <div class="lookbook-grid">
+      <img src="media/images/images (4).jpeg" alt="Lookbook 1">
+      <img src="media/images/il_fullxfull.5270282908_pgem.jpg" alt="Lookbook 2">
+      <img src="media/images/images (5).jpeg" alt="Lookbook 3">
+      <img src="media/images/images (6).jpeg" alt="Lookbook 4">
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <h2>What Our Customers Say</h2>
+    <div class="testimonials-container">
+      <div class="testimonial">
+        <img src="media/images/1000083833-removebg-preview.png" alt="Customer 1">
+        <p>"Absolutely love my new sweater! So cozy."</p>
+        <h4>- Ama</h4>
+      </div>
+      <div class="testimonial">
+        <img src="media/images/1000083831-removebg-preview.png" alt="Customer 2">
+        <p>"The handmade bag exceeded my expectations!"</p>
+        <h4>- Kojo</h4>
+      </div>
+      <div class="testimonial">
+        <img src="media/images/1000083832-removebg-preview.png" alt="Customer 3">
+        <p>"Beautiful crochet decor, perfectly crafted."</p>
+        <h4>- George</h4>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product | Cozy Crochet</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* --- Page Layout --- */
+body { background:#FFF8F2; font-family:'Inter',sans-serif; color:#333; }
+.main-content { padding:2rem; max-width:1200px; margin:0 auto; }
+.topbar { height:60px; display:flex; align-items:center; padding:0 1rem; background:#fff; box-shadow:0 1px 5px rgba(0,0,0,0.05); }
+.btn-menu { font-size:1.6rem; background:none; border:none; cursor:pointer; color:#333; }
+
+/* --- Product Page --- */
+.product-page { display:flex; gap:2rem; flex-wrap:wrap; }
+.product-gallery { flex:1 1 400px; }
+.product-gallery img#mainImg { width:100%; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.1); margin-bottom:1rem; }
+.thumbs { display:flex; gap:0.5rem; flex-wrap:wrap; }
+.thumbs img { width:60px; height:60px; object-fit:cover; border-radius:8px; cursor:pointer; border:2px solid transparent; transition:.3s; }
+.thumbs img:hover { border-color:#D17C4B; }
+
+.product-info { flex:1 1 300px; background:#fff; padding:1.5rem; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.08); }
+.product-info h2 { color:#D17C4B; margin-bottom:1rem; }
+.product-info p { font-weight:500; margin-bottom:1.5rem; font-size:1.2rem; }
+
+.product-info label { display:block; margin:0.5rem 0 0.2rem 0; font-weight:500; }
+.product-info select { width:100%; padding:0.6rem 0.8rem; margin-bottom:1rem; border-radius:8px; border:1px solid #D17C4B; background:#fff; cursor:pointer; transition:.3s; }
+.product-info select:hover { background:#FFEFE5; }
+
+.btn { display:inline-block; padding:0.7rem 1.5rem; background:#D17C4B; color:#fff; text-decoration:none; border:none; border-radius:8px; cursor:pointer; transition:.3s; }
+.btn:hover { background:#b96b3f; }
+
+/* --- Responsive --- */
+@media(max-width:768px){
+  .product-page { flex-direction:column; }
+  .product-gallery, .product-info { width:100%; }
+  .thumbs img { width:50px; height:50px; }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar" id="sidebar">
+  <div class="logo-sidebar">Cozy Crochet</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="blog.html">Tutorials</a>
+    <a href="custom-order.html">Custom Order</a>
+    <a href="account.html">Account</a>
+  </nav>
+</aside>
+
+<div class="main-content" id="mainContent">
+  <header class="topbar">
+    <button class="btn-menu" onclick="toggleSidebar()">☰</button>
+  </header>
+
+  <section class="product-page">
+    <div class="product-gallery">
+      <img id="mainImg" src="" alt="Product Image">
+      <div class="thumbs" id="thumbsContainer"></div>
+    </div>
+    <div class="product-info">
+      <h2 id="productName"></h2>
+      <p id="productPrice"></p>
+
+      <label>Size:</label>
+      <select id="productSize"></select>
+
+      <label>Yarn:</label>
+      <select id="productYarn"></select>
+
+      <button class="btn" id="addToCart">Add to Cart</button>
+    </div>
+  </section>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+const storedProduct = localStorage.getItem('selectedProduct');
+
+if(!storedProduct) {
+  window.location.href = 'shop.html';
+} else {
+  const product = JSON.parse(storedProduct);
+
+  document.getElementById('productName').textContent = product.name;
+  document.getElementById('productPrice').textContent = `$${product.price}`;
+
+  const sizeSelect = document.getElementById('productSize');
+  sizeSelect.innerHTML = product.size ? `<option>${product.size}</option>` : '';
+
+  const yarnSelect = document.getElementById('productYarn');
+  yarnSelect.innerHTML = product.yarn ? `<option>${product.yarn}</option>` : '';
+
+  const mainImg = document.getElementById('mainImg');
+  const thumbsContainer = document.getElementById('thumbsContainer');
+  mainImg.src = product.img;
+  thumbsContainer.innerHTML = `<img src="${product.img}" onclick="changeImage(this)">`;
+
+  window.changeImage = function(el) { mainImg.src = el.src; }
+}
+
+// Add to cart functionality
+const addToCartBtn = document.getElementById('addToCart');
+addToCartBtn.addEventListener('click', () => {
+  const product = JSON.parse(localStorage.getItem('selectedProduct'));
+  const size = document.getElementById('productSize').value;
+  const yarn = document.getElementById('productYarn').value;
+
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  const existingIndex = cart.findIndex(p => p.name === product.name && p.size === size && p.yarn === yarn);
+  if (existingIndex > -1) {
+    cart[existingIndex].quantity += 1;
+  } else {
+    cart.push({ ...product, size, yarn, quantity:1 });
+  }
+
+  localStorage.setItem('cart', JSON.stringify(cart));
+  window.location.href = 'cart.html';
+});
+</script>
+</body>
+</html>

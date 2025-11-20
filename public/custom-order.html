@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Order | Cozy Crochet</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+body { background:#FFF8F2; font-family:'Inter',sans-serif; color:#333; }
+.main-content { max-width:900px; margin:0 auto; padding:2rem; }
+.topbar { height:60px; display:flex; align-items:center; padding:0 1rem; background:#fff; box-shadow:0 1px 5px rgba(0,0,0,0.05); }
+.btn-menu { font-size:1.6rem; background:none; border:none; cursor:pointer; color:#333; }
+
+.custom-order-form { background:#fff; padding:2rem; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.1); }
+.custom-order-form h2 { color:#D17C4B; margin-bottom:1.5rem; }
+.custom-order-form label { display:block; margin:0.7rem 0 0.3rem; font-weight:500; }
+.custom-order-form input[type="text"],
+.custom-order-form input[type="email"],
+.custom-order-form input[type="date"],
+.custom-order-form select,
+.custom-order-form input[type="file"] { width:100%; padding:0.7rem 1rem; border-radius:8px; border:1px solid #D17C4B; margin-bottom:1rem; transition:.3s; }
+.custom-order-form input:hover,
+.custom-order-form select:hover { background:#FFEFE5; }
+
+#priceEstimate { font-weight:700; color:#D17C4B; }
+
+.btn { display:inline-block; padding:0.7rem 1.5rem; background:#D17C4B; color:#fff; text-decoration:none; border:none; border-radius:8px; cursor:pointer; transition:.3s; }
+.btn:hover { background:#b96b3f; }
+
+.image-preview { margin-bottom:1rem; max-height:150px; border-radius:8px; box-shadow:0 3px 10px rgba(0,0,0,0.1); }
+</style>
+</head>
+<body>
+
+<aside class="sidebar" id="sidebar">
+  <div class="logo-sidebar">Cozy Crochet</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="blog.html">Tutorials</a>
+    <a href="custom-order.html">Custom Order</a>
+    <a href="account.html">Account</a>
+  </nav>
+</aside>
+
+<div class="main-content" id="mainContent">
+  <header class="topbar">
+    <button class="btn-menu" onclick="toggleSidebar()">☰</button>
+  </header>
+
+  <section class="custom-order-form">
+    <h2>Submit Your Custom Order</h2>
+    <form id="orderForm">
+      <label>Name:</label>
+      <input type="text" name="name" required>
+
+      <label>Email:</label>
+      <input type="email" name="email" required>
+
+      <label>Product Type:</label>
+      <select name="productType" id="productType">
+        <option value="Clothing">Clothing</option>
+        <option value="Bags">Bags</option>
+        <option value="Plushies">Plushies</option>
+        <option value="Home Decor">Home Decor</option>
+        <option value="Baby Items">Baby Items</option>
+      </select>
+
+      <label>Yarn Style:</label>
+      <select name="yarnStyle" id="yarnStyle">
+        <option value="Cotton">Cotton</option>
+        <option value="Wool">Wool</option>
+        <option value="Acrylic">Acrylic</option>
+      </select>
+
+      <label>Colors:</label>
+      <input type="text" name="colors" placeholder="E.g., Red, Beige" required>
+
+      <label>Size:</label>
+      <input type="text" name="size" placeholder="E.g., M, L" required>
+
+      <label>Upload Reference Image:</label>
+      <input type="file" name="reference" id="referenceImage">
+      <img id="imagePreview" class="image-preview" src="" alt="" style="display:none;">
+
+      <label>Preferred Delivery Date:</label>
+      <input type="date" name="delivery" required>
+
+      <p>Estimated Price: $<span id="priceEstimate">50</span></p>
+
+      <button class="btn" type="submit">Submit Order</button>
+    </form>
+  </section>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+const productType = document.getElementById('productType');
+const yarnStyle = document.getElementById('yarnStyle');
+const priceEstimate = document.getElementById('priceEstimate');
+const referenceImage = document.getElementById('referenceImage');
+const imagePreview = document.getElementById('imagePreview');
+
+// Simple price estimation logic
+function updatePrice() {
+  let base = 50; // default
+  const type = productType.value;
+  const yarn = yarnStyle.value;
+
+  if(type === 'Bags') base += 20;
+  if(type === 'Clothing') base += 30;
+  if(type === 'Plushies') base += 10;
+  if(type === 'Home Decor') base += 15;
+  if(type === 'Baby Items') base += 5;
+
+  if(yarn === 'Wool') base += 10;
+  if(yarn === 'Cotton') base += 5;
+  if(yarn === 'Acrylic') base += 0;
+
+  priceEstimate.textContent = base;
+}
+
+// Update price when product type or yarn changes
+productType.addEventListener('change', updatePrice);
+yarnStyle.addEventListener('change', updatePrice);
+
+// Image preview
+referenceImage.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if(file){
+    const reader = new FileReader();
+    reader.onload = function(e){
+      imagePreview.src = e.target.result;
+      imagePreview.style.display = 'block';
+    }
+    reader.readAsDataURL(file);
+  }
+});
+
+// Form submission
+document.getElementById('orderForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  alert('✅ Your custom order has been submitted!');
+  e.target.reset();
+  imagePreview.style.display = 'none';
+  priceEstimate.textContent = '50';
+});
+</script>
+</body>
+</html>

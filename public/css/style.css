@@ -1,0 +1,321 @@
+/* ================================
+   COZY CROCHET - MAIN THEME
+================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600&display=swap');
+
+:root {
+  --bg-main: #FFF8F2;
+  --bg-accent: #FFEFE5;
+  --brand: #D17C4B;
+  --brand-dark: #b96b3f;
+  --text-main: #333;
+  --text-muted: #666;
+  --card-bg: #fff;
+  --shadow: 0 6px 16px rgba(0,0,0,0.08);
+  --radius: 16px;
+  --transition: 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: var(--bg-main);
+  color: var(--text-main);
+  overflow-x: hidden;
+}
+
+/* ================================
+   SIDEBAR
+================================= */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 240px;
+  height: 100%;
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  padding: 2rem 1rem;
+  z-index: 200;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar .logo-sidebar {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--brand);
+  margin-bottom: 2rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.sidebar nav a {
+  display: block;
+  color: var(--text-main);
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  transition: var(--transition);
+  margin-bottom: 0.5rem;
+}
+
+.sidebar nav a:hover {
+  background: var(--bg-accent);
+  color: var(--brand-dark);
+}
+
+/* ================================
+   OVERLAY
+================================= */
+#overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition);
+  z-index: 150;
+}
+
+#overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ================================
+   TOPBAR
+================================= */
+.topbar {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: #fff;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.btn-menu {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: var(--brand);
+}
+
+/* ================================
+   HERO SECTION
+================================= */
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4rem 10%;
+  background: linear-gradient(to right, var(--bg-main) 60%, var(--bg-accent));
+}
+
+.hero-text {
+  max-width: 500px;
+  animation: fadeInUp 1s ease;
+}
+
+.hero-text h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  color: var(--brand-dark);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.hero-text p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.btn, .btn-outline {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition);
+  margin-right: 1rem;
+}
+
+.btn {
+  background: var(--brand);
+  color: #fff;
+}
+
+.btn:hover {
+  background: var(--brand-dark);
+}
+
+.btn-outline {
+  border: 2px solid var(--brand);
+  color: var(--brand);
+}
+
+.btn-outline:hover {
+  background: var(--brand);
+  color: #fff;
+}
+
+.hero-image img {
+  width: 350px;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ================================
+   FEATURED PRODUCTS CAROUSEL
+================================= */
+.carousel-section {
+  padding: 3rem 5%;
+  text-align: center;
+  background: #fff;
+  position: relative;
+}
+
+.carousel-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: var(--brand-dark);
+  margin-bottom: 2rem;
+}
+
+/* Carousel container (fade-style) */
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 350px; /* adjust based on image size */
+  overflow: hidden;
+}
+
+/* Carousel items */
+.carousel-item {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: opacity 1s ease-in-out;
+}
+
+.carousel-item.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.carousel-item img {
+  max-width: 250px;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+}
+
+.carousel-item p {
+  margin: 0;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+/* Carousel buttons */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px; height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.carousel-btn:hover {
+  background: var(--brand-dark);
+}
+
+.carousel-btn.prev { left: 2%; }
+.carousel-btn.next { right: 2%; }
+
+/* ================================
+   BRAND STORY
+================================= */
+.story {
+  padding: 4rem 10%;
+  background: var(--bg-accent);
+  text-align: center;
+}
+
+.story h2 {
+  font-family: 'Playfair Display', serif;
+  color: var(--brand-dark);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.story p {
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+.cta-buttons .btn, .cta-buttons .btn-outline {
+  margin: 0.5rem;
+}
+
+/* ================================
+   ANIMATIONS
+================================= */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ================================
+   RESPONSIVE
+================================= */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+  .hero-image img {
+    width: 250px;
+    margin-bottom: 2rem;
+  }
+  .carousel-btn { display: none; }
+  .carousel { height: 250px; }
+}
